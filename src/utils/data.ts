@@ -26,9 +26,11 @@ const generateFromConfigs = (configs: ArtworkConfig[]): Artwork[] =>
   configs.flatMap(({ count, prefix, path, category, idStart = 1, startIndex = 0 }) =>
     Array.from({ length: count }, (_, i) => {
       const index = i + startIndex;
+      // Make category singular by removing 's' at the end if it exists
+      const singularCategory = category.endsWith('s') ? category.slice(0, -1) : category;
       return {
         id: idStart + i,
-        title: `${category} ${index}`,
+        title: `${singularCategory} ${index}`,
         description: `An artwork from the ${category.toLowerCase()} series, number ${index}.`,
         imageUrl: `/${path}/${prefix}.${index}.webp`,
         category
