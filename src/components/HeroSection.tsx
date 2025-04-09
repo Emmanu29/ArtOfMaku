@@ -5,7 +5,7 @@ const HeroSection = () => {
       <div className="absolute inset-0 bg-center bg-no-repeat sm:[background-size:90%_100%] 
     md:[background-size:95%_100%] 
     lg:[background-size:100%_100%]" style={{
-      backgroundImage: `url('./Maya.jpg')`
+      backgroundImage: `url('./Maya.webp')`,
     }}>
         <div className="absolute inset-0 bg-black/50"></div>
       </div>
