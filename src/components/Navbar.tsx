@@ -26,20 +26,24 @@ const Navbar = () => {
   const isActive = (path: string) => {
     return location.pathname === path;
   };
-  return <header className="bg-zinc-900 border-b border-zinc-800">
+  return <header className="fixed top-0 left-0 right-0 z-50 bg-zinc-900/95 backdrop-blur-sm border-b border-zinc-800">
       <div className="container mx-auto px-4 py-6">
         <nav className="flex justify-between items-center">
-          <Link to="/" className="flex items-center">
+          <Link to="/" onClick={() =>
+                window.scrollTo({ top: 0, behavior: 'smooth' })
+              } className="flex items-center">
             <h1 className="text-2xl font-bold text-amber-400">Art of Maku</h1>
           </Link>
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
-            {navLinks.map(link => <Link key={link.path} to={link.path} className={`transition duration-300 hover:text-amber-400 ${isActive(link.path) ? 'text-amber-400' : 'text-white'}`}>
+            {navLinks.map(link => <Link key={link.path} to={link.path} onClick={() =>
+                window.scrollTo({ top: 0, behavior: 'smooth' })
+              } className={`transition duration-300 hover:text-amber-400 ${isActive(link.path) ? 'text-amber-400' : 'text-white'}`}>
                 {link.name}
               </Link>)}
           </div>
           {/* Mobile Menu Button */}
-          <button className="md:hidden text-white focus:outline-none" onClick={toggleMenu}>
+          <button className="md:hidden text-white focus:outline-none"  onClick={toggleMenu}>
             {isMenuOpen ? <XIcon size={24} /> : <MenuIcon size={24} />}
           </button>
         </nav>

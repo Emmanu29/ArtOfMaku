@@ -95,7 +95,7 @@ const GalleryGrid: React.FC<GalleryGridProps> = ({ artworks, showFilters = true 
   return (
     <div className="w-full bg-zinc-900">
       {showFilters && (
-        <div className="sticky top-0 z-10 bg-zinc-900/95 backdrop-blur-sm py-4 px-4 flex flex-wrap gap-2 mb-8">
+        <div className="sticky top-[70px] z-10 bg-zinc-900/95 backdrop-blur-sm py-4 px-4 flex flex-wrap gap-2 mb-8">
           <button
             className={`px-4 py-2 rounded-full text-sm transition-colors ${
               selectedCategory === null

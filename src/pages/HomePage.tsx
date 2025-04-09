@@ -5,6 +5,8 @@ import HeroSection from '../components/HeroSection';
 import FeaturedSlider from '../components/FeaturedSlider'; // Import our new component
 import { artworks } from '../utils/data';
 import { ArrowRightIcon } from 'lucide-react';
+import { Helmet } from 'react-helmet-async';
+import SEO from '../components/SEO';
 
 const HomePage = () => {
   // Use all artworks instead of just a slice
@@ -26,11 +28,18 @@ const HomePage = () => {
   };
 
   return (
+  <>
+      <SEO 
+        title="Art of Maku | Digital Art Portfolio" 
+        description="Explore vibrant worlds and characters through digital artistry by Maku."
+        image="./Maya.jpg"
+      />
+
     <div className="w-full">
       <HeroSection />
-
+      
       <motion.section
-        className="py-16 px-4 bg-gradient-to-br from-zinc-900 to-zinc-800 "
+        className="py-16 px-4 bg-gradient-to-br from-zinc-900 to-zinc-800"
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
@@ -39,21 +48,24 @@ const HomePage = () => {
         <div className="container mx-auto">
           <div className="flex flex-col md:flex-row justify-between items-center mb-12">
             <div>
-              <h2 className="text-4xl font-extrabold text-white tracking-wide">Featured Works</h2>
+              <h2 className="text-4xl font-extrabold text-white tracking-wide">
+                Featured Works
+              </h2>
               <p className="text-gray-300 mt-2 max-w-lg">
                 Explore some of Maku&apos;s finest creations that redefine digital art with vibrant colors and imaginative designs.
               </p>
             </div>
             <Link
               to="/gallery"
-              onClick={()=> window.scrollTo({ top: 0, behavior: 'smooth'})}
+              onClick={() =>
+                window.scrollTo({ top: 0, behavior: 'smooth' })
+              }
               className="mt-4 md:mt-0 flex items-center text-lg py-3 px-6 bg-gradient-to-r from-amber-400 to-amber-500 rounded-full text-white font-semibold transition-all duration-300 ease-in-out transform hover:bg-amber-400 hover:scale-105 hover:shadow-lg"
             >
               View all works <ArrowRightIcon size={20} className="ml-1" />
             </Link>
           </div>
 
-          {/* Pass all artworks to the slider */}
           <FeaturedSlider artworks={featuredArtworks} maxItems={12} />
         </div>
       </motion.section>
@@ -69,7 +81,8 @@ const HomePage = () => {
         </button>
       )}
     </div>
-  );
-};
+  </>
+);
+}
 
 export default HomePage;
