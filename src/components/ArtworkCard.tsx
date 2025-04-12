@@ -8,12 +8,16 @@ interface ArtworkCardProps {
 }
 
 const ArtworkCard: React.FC<ArtworkCardProps> = ({ artwork, onClick, priority = false }) => {
+  const [hasLoaded, setHasLoaded] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [imageError, setImageError] = useState(false);
 
   const handleImageLoad = useCallback(() => {
     setIsLoading(false);
+    setHasLoaded(true); 
   }, []);
+
+  const showSkeleton = isLoading && !hasLoaded;
 
   const handleImageError = useCallback(() => {
     setIsLoading(false);
@@ -29,7 +33,7 @@ const ArtworkCard: React.FC<ArtworkCardProps> = ({ artwork, onClick, priority = 
     >
       <div className="relative aspect-square overflow-hidden">
         {/* Skeleton loader */}
-        {isLoading && (
+        {showSkeleton && (
           <div className="absolute inset-0 bg-zinc-700 animate-pulse"></div>
         )}
 
@@ -40,15 +44,17 @@ const ArtworkCard: React.FC<ArtworkCardProps> = ({ artwork, onClick, priority = 
           </div>
         ) : (
           <img
-            src={artwork.imageUrl}
-            alt={artwork.title}
-            loading={priority ? "eager" : "lazy"}
-            className={`h-full w-full object-cover transition-transform duration-500 group-hover:scale-110 ${
-              isLoading ? 'opacity-0' : 'opacity-100 transition-opacity duration-500'
-            }`}
-            onLoad={handleImageLoad}
-            onError={handleImageError}
-          />
+     src={artwork.imageUrl}
+     alt={artwork.title}
+     loading={priority ? "eager" : "lazy"}
+     decoding="async"
+     fetchPriority={priority ? "high" : "auto"}
+     className={`h-full w-full object-cover transition-transform duration-500 group-hover:scale-110 will-change-transform ${
+       hasLoaded ? 'opacity-100 transition-opacity duration-500' : 'opacity-0'
+     }`}
+     onLoad={handleImageLoad}
+     onError={handleImageError}
+   />
         )}
 
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100 flex flex-col justify-end p-4">

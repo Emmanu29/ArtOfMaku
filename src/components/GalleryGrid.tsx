@@ -61,6 +61,19 @@ const GalleryGrid: React.FC<GalleryGridProps> = ({ artworks, showFilters = true 
     };
   }, [filteredArtworks.length, loadingMore, visibleRange.end]);
 
+  useEffect(() => {
+    // I-preload ang susunod na batch ng images
+    const preloadImages = () => {
+      const nextBatch = filteredArtworks.slice(visibleRange.end, visibleRange.end + 6);
+      nextBatch.forEach(artwork => {
+        const img = new Image();
+        img.src = artwork.imageUrl;
+      });
+    };
+    
+    preloadImages();
+  }, [filteredArtworks, visibleRange.end]);
+
   // Category selection handler
   const handleCategoryChange = useCallback((category: string | null) => {
     setSelectedCategory(category);
@@ -129,7 +142,7 @@ const GalleryGrid: React.FC<GalleryGridProps> = ({ artworks, showFilters = true 
               <ArtworkCard
                 key={artwork.id}
                 artwork={artwork}
-                priority={index < 6} // Load first 6 images eagerly
+                priority={index < 18} // Load first 12 images eagerly
                 onClick={() => handleArtworkClick(index)}
               />
             ))}

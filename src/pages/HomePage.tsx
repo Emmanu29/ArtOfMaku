@@ -5,8 +5,10 @@ import HeroSection from '../components/HeroSection';
 import FeaturedSlider from '../components/FeaturedSlider'; // Import our new component
 import { artworks } from '../utils/data';
 import { ArrowRightIcon } from 'lucide-react';
-import { Helmet } from 'react-helmet-async';
 import SEO from '../components/SEO';
+import { throttle } from 'lodash';
+
+
 
 const HomePage = () => {
   // Use all artworks instead of just a slice
@@ -16,23 +18,32 @@ const HomePage = () => {
   const [showScroll, setShowScroll] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
+    const handleScroll = throttle(() => {
       setShowScroll(window.pageYOffset > 300);
-    };
+    }, 200);
+    
     window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      handleScroll.cancel(); // Clean up the throttled function
+    };
   }, []);
 
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    // Use smooth scrolling behavior
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
   };
 
   return (
   <>
-      <SEO 
-        title="Art of Maku | Digital Art Portfolio" 
-        description="Explore vibrant worlds and characters through digital artistry by Maku."
-        image="./Maya.jpg"
+        <SEO 
+        title="Art of Maku | Digital Art Portfolio by Gerard Villanueva Quizon"
+        description="Explore vibrant worlds and characters through digital artistry by Maku. Professional Filipino content creator, character designer & concept artist specializing in fantasy and stylish character designs."
+        image="https://art-of-maku.vercel.app/artofmaku.jpg"
+        canonicalUrl="https://art-of-maku.vercel.app"
       />
 
     <div className="w-full">
