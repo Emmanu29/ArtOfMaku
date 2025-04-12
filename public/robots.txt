@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://art-of-maku.vercel.app/sitemap.xml
